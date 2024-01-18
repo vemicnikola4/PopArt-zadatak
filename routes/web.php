@@ -2,12 +2,13 @@
 
 use App\Models\Custumer;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustumerController;
 use App\Http\Controllers\AdCategoryController;
 use App\Http\Controllers\AdCategory2Controller;
 use App\Http\Controllers\AdCategory3Controller;
+use App\Http\Controllers\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,12 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('custumer', CustumerController::class)->except(['show']);
 
+    Route::resource('ad',AdController::class)->except(['create']);
+    Route::get('ad/create/{custumer}',[AdController::class,'create'])->name('ad.create');
+    Route::get('ad/delete/{ad}',[AdController::class,'delete'])->name('ad.delete');
+
+    
+
 });
 
 //route for localization
@@ -51,23 +58,30 @@ Route::get('/lang/{locale}',function(string $locale){
 
  Route::middleware(['auth','admin'])->name('admin.')->prefix('admin')->group(function(){
 
-    //  Route::get('/dashboard', [AdminController::class,'index'])->name('dashboard');
+    Route::get('/', [AdminController::class,'index'])->name('index');
 
-     Route::resource('custumer', CustumerController::class)->except(['show']);
+    
+    Route::resource('custumer', CustumerController::class)->except(['show']);
 
-     //ad_category routes
-     Route::resource('ad_category',AdCategoryController::class);
-     Route::get('ad_category/delete/{ad_category}',[AdCategoryController::class,'delete'])->name('ad_category.delete');
+    //ad_category routes
+    Route::resource('ad_category',AdCategoryController::class);
+    Route::get('ad_category/delete/{ad_category}',[AdCategoryController::class,'delete'])->name('ad_category.delete');
 
-     //ad_category_2 routes
-     Route::resource('ad_category_2',AdCategory2Controller::class)->except(['create']);
-     Route::get('ad_category_2/create/{ad_category_id}',[AdCategory2Controller::class,'create'])->name('ad_category_2.create');
-     Route::get('ad_category_2/delete/{ad_category_2}',[AdCategory2Controller::class,'delete'])->name('ad_category_2.delete');
+    //ad_category_2 routes
+    Route::resource('ad_category_2',AdCategory2Controller::class)->except(['create']);
+    Route::get('ad_category_2/create/{ad_category_id}',[AdCategory2Controller::class,'create'])->name('ad_category_2.create');
+    Route::get('ad_category_2/delete/{ad_category_2}',[AdCategory2Controller::class,'delete'])->name('ad_category_2.delete');
 
 
-     Route::resource('ad_category_3',AdCategory3Controller::class);
-     Route::get('ad_category_3/create/{ad_category_2}',[AdCategory3Controller::class,'create'])->name('ad_category_3.create');
-     Route::get('ad_category_3/delete/{ad_category_3}',[AdCategory3Controller::class,'delete'])->name('ad_category_3.delete');
+    Route::resource('ad_category_3',AdCategory3Controller::class);
+    Route::get('ad_category_3/create/{ad_category_2}',[AdCategory3Controller::class,'create'])->name('ad_category_3.create');
+    Route::get('ad_category_3/delete/{ad_category_3}',[AdCategory3Controller::class,'delete'])->name('ad_category_3.delete');
+
+    Route::resource('custumer',CustumerController::class);
+    Route::get('custumers',[CustumerController::class,'all'])->name('custumers.all');
+    Route::get('custumer/delete/{custumer}',[CustumerController::class,'delete'])->name('custumer.delete');
+
+
 
 
 

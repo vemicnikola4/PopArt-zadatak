@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Custumer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\AdminController;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->is_admin == 1){
-            return view('admin.index');
+            return redirect()->route('admin.index');
         }elseif(Custumer::where('user_id', Auth::user()->id)->exists()){
             return redirect()->route('custumer.index');
 

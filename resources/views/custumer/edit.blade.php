@@ -62,13 +62,31 @@
                                     <input id="location" type="text" class="form-control" name="location" value="{{ old('location',$custumer->location) }}" required autocomplete="">
                                 </div>
                             </div>
-    
-                            <div class="row mb-0">
+                            <div class="row mb-3">
+                                <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
+
+                                <input type="file" class="form-control @error('image') is-invalid @enderror col-md-6"
+                                id="image" name="image" value="{{ old('image',$custumer->image) }}" >
+                                @error('image')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="row">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Edit') }}
                                     </button>
+                                @if(Auth::user()->is_admin == 1)
+                                    <a href="{{ route('admin.custumers.all') }}" class="btn btn-secondary">{{ __('Back') }}</a>
+                                 @else
+                                         <a href="{{ route('custumer.index') }}" class="btn btn-secondary">{{ __('Back') }}</a>
+
+                                 @endif
                                 </div>
+                                
+                                   
                             </div>
                         </form>
 

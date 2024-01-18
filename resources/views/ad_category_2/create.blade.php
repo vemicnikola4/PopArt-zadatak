@@ -27,7 +27,7 @@
     
                                     @error('title')
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $message }}</strong>z
                                         </span>
                                     @enderror
                                 </div>

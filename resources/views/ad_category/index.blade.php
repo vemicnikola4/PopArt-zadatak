@@ -17,11 +17,14 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">{{ __('All categories') }}</th>
-                                <th scope="col"></th>
                                 <th scope="col">
                                     <a href="{{ route('admin.ad_category.create') }} "class="btn btn-primary">{{ __ ('New category') }}</a>
                                     
                                 </th>
+                                <th scope="col">
+                                    <a href="{{ route('admin.index') }}" class="btn btn-secondary">{{ __('Back') }}</a>
+                                </th>
+
                             </tr>
                         </thead>
                         <tbody>

@@ -41,13 +41,13 @@ class AdCategory2Controller extends Controller
         $ad_category_2 ->title = request('title');
         $ad_category_2 ->ad_category_id = request('ad_category_id');
 
-        $ad_category = Ad_category::find(request('ad_category_id'))->first();
+        // $ad_category = Ad_category::find(request('ad_category_id'))->first();
 
         $ad_category_2->save();
         $request->session()->flash('alert_type','success');
         $request->session()->flash('msg','Succssesfuly added');
 
-        return redirect('admin.ad_category.show/{'.$ad_category.'}');
+        return redirect()->route('admin.ad_category.show',['ad_category'  => $ad_category_2->ad_category_id]);
 
     }
 

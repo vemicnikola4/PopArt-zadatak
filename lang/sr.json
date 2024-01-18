@@ -53,5 +53,11 @@
    "Confirm": "Potvrdi",
    "Parent category": "Nadkategorija",
    "Subcategories" :"Podkategorije",
-   "new subcategory":"nova podkategorija"
+   "new subcategory":"nova podkategorija",
+   "Image":"Slika",
+   "Create new ad":"Novi oglas",
+   "Descriptio":"Opis",
+   "Price":"Cena",
+   "Chose one...":"Odeberi jedan...",
+   "Condition":"Stanje"
 }

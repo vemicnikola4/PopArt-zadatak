@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
+<div class="container-fluid">
+    <div class="row">
+        @include('layouts.sidebar')
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
@@ -17,13 +18,13 @@
                         {{ __('Welcome Admin') }}
                     </h3>
                     {{-- <a href="{{ route('admin.ad_category.index')}}">{{ __('Ad categories') }}</a> --}}
-                    <a href="{{ route('admin.ad_category.index')}}">{{ __('Ad categories') }}</a>
                     
                  
 
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 @endsection
