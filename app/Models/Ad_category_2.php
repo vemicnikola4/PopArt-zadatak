@@ -21,5 +21,9 @@ class Ad_category_2 extends Model
     public function adCategories3(): HasMany {
         return $this->hasMany(Ad_category_3::class);
     }
+    public function ads(): HasMany {
+        //ovo je query bilder i mozemo da ga sirimo i where uslovima itd
+        return $this->hasMany(Ad::class);
+    }
      
 }

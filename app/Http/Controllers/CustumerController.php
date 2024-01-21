@@ -119,16 +119,47 @@ class CustumerController extends Controller
             'last_name' => 'required|string|max:255|min:3',
             'phone_number' => 'string|max:255|min:3',
             'location' =>'string|max:255|min:3',
+            'image' => 'image|between:1,5000'
+
             
         ]);
 
-        if ($custumer-> name == $request->input('name') && $custumer-> last_name == $request->input('last_name') &&  $custumer-> phone_number == $request->input('phone_number') && $custumer-> location == $request->input('location')&&$custumer-> image == $request->input('image')){
+        if ($custumer-> name == $request->input('name') && $custumer-> last_name == $request->input('last_name') &&  $custumer-> phone_number == $request->input('phone_number') && $custumer-> location == $request->input('location') && $custumer-> image == $request->input('image')){
             $request->session()->flash('alert_type','warning');
             $request->session()->flash('msg','Nothing to update');
         }else{
-            $custumer->update($request->all());
-            $request->session()->flash('alert_type','success');
-            $request->session()->flash('msg','Succssesfuly updated');
+            if($request->hasFile('image') && $request->file('image')->isValid()){
+                //generisemo naziv slike id filma i ekstenzija fajla
+                $imgName =  $custumer->user_id . '.' . $request->file('image')->extension();
+             
+                //smestamo fajl u folder public/custumer_images
+                Storage::disk('public')
+                ->putFileAs('custumer_images', $request->file('image'), $imgName);
+             
+                //u bazi belezimo putanju od public foldera
+                $custumer->image = 'custumer_images/'.$imgName;
+                $custumer->update($request->all());
+
+    
+                $request->session()->flash('alert_type','success');
+                $request->session()->flash('msg','Succssesfuly updated');
+    
+                if (Auth::user()->is_admin == 1){
+                    return view('admin.index');
+                }else{
+                    return redirect()->route('custumer.index');
+                }
+            }else{
+                $request->session()->flash('alert_type','warning');
+                $request->session()->flash('msg','Record not updated');
+    
+                if (Auth::user()->is_admin == 1){
+                    return view('admin.index');
+                }else{
+                    return redirect()->route('custumer.index');
+                }
+            }
+            
         }
         
 

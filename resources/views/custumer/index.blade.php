@@ -39,13 +39,13 @@
                 <div class="card-body">
                     <table class="table">
                         <thead>
-                            <th>#</th>
                             <th>Ad id</th>
                             <th>Posted at</th>
                             <th>Title</th>
                             <th>Description</th>
                             <th>Price</th>
                             <th>Condition</th>
+                            <th>Category</th>
                             <th>
                                 <a href="{{ route('ad.create',['custumer'=>$custumer->id]) }}" class="btn btn-primary">{{ __('New ad') }}</a>
                             </th>
@@ -53,7 +53,6 @@
                         <tbody>
                             @foreach ($custumer->ads as $ad) 
                             <tr>
-                                <td></td>
                                 <td>{{ $ad->id }}</td>
                                 <td>{{ $ad->created_at }}</td>
                                 <td>{{ $ad->title }}</td>
@@ -61,13 +60,29 @@
                                 <td>{{ $ad->price }}</td>
                                 <td>{{ $ad->condition }}</td>
                                 <td>
-                                    <a href="" class="btn btn-primary">{{ __('Show') }}</a>    
+                                    {{ $ad->adCategory->title }}                  
+                                    @foreach (  $ad->adCategory->adCategories2 as  $ad_category_2 )
+                                    @if( $ad_category_2->id == $ad->ad_category_2_id)
+                                    {{ (' ->') }}{{ $ad_category_2->title }}
+                                        @foreach (  $ad_category_2->adCategories3 as  $ad_category_3 )
+                                            @if( $ad_category_3->id == $ad->ad_category_3_id)
+                                            {{ (' ->') }}{{ $ad_category_3->title }}
+
+                                            @endif 
+
+                                        @endforeach
+                                    @endif                                      
+                                    @endforeach
+                                   
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-success">{{ __('Edit') }}</a>    
+                                    <a href="{{  route('ad.show',['ad'=>$ad->id]) }}" class="btn btn-primary">{{ __('Show') }}</a>    
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-danger">{{ __('Delete') }}</a>    
+                                    <a href="{{ route('ad.edit',['ad'=>$ad->id]) }}" class="btn btn-success">{{ __('Edit') }}</a>    
+                                </td>
+                                <td>
+                                    <a href="{{ route('ad.delete',['ad'=>$ad->id]) }}" class="btn btn-danger">{{ __('Delete') }}</a>    
                                 </td>
                             </tr>
                             @endforeach

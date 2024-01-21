@@ -3,6 +3,7 @@
 use App\Models\Custumer;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustumerController;
 use App\Http\Controllers\AdCategoryController;
@@ -21,9 +22,12 @@ use App\Http\Controllers\Admin\AdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::middleware('guest')->group(function (){
+//     Route::get('/',[HomeController::class, 'index'])->name('/');
+
+// });
+Route::get('/', [HomeController::class, 'index'])->name('/');
+
 Route::get('back',function(){
     return back();
 })->name('back');
@@ -32,6 +36,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('ad/show/{ad}',[AdController::class,'show'])->name('ad.show');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -39,7 +45,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('custumer', CustumerController::class)->except(['show']);
 
-    Route::resource('ad',AdController::class)->except(['create']);
+    Route::resource('ad',AdController::class)->except(['create','show']);
     Route::get('ad/create/{custumer}',[AdController::class,'create'])->name('ad.create');
     Route::get('ad/delete/{ad}',[AdController::class,'delete'])->name('ad.delete');
 
@@ -73,7 +79,7 @@ Route::get('/lang/{locale}',function(string $locale){
     Route::get('ad_category_2/delete/{ad_category_2}',[AdCategory2Controller::class,'delete'])->name('ad_category_2.delete');
 
 
-    Route::resource('ad_category_3',AdCategory3Controller::class);
+    Route::resource('ad_category_3',AdCategory3Controller::class)->except(['create']);
     Route::get('ad_category_3/create/{ad_category_2}',[AdCategory3Controller::class,'create'])->name('ad_category_3.create');
     Route::get('ad_category_3/delete/{ad_category_3}',[AdCategory3Controller::class,'delete'])->name('ad_category_3.delete');
 
@@ -92,4 +98,4 @@ require __DIR__.'/auth.php';
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
